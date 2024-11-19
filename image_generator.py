@@ -1,27 +1,37 @@
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 
-def create_chess_piece_image(piece_name, color, size=100):
-    # Create a blank image with white background
-    image = Image.new("RGB", (size, size), "white")
+def create_pixel_chess_piece(piece_name, color, size=64):
+    # Create a blank image with a transparent background
+    image = Image.new("RGBA", (size, size), (0, 0, 0, 0))
     draw = ImageDraw.Draw(image)
 
-    # Choose font and size (you can customize this)
-    font = ImageFont.load_default()
+    # Define pixel coordinates for simple shapes representing each piece
+    if piece_name[1] == "P":  # Pawn
+        pixels = [(28, 48), (36, 48), (36, 32), (28, 32), (24, 28), (40, 28), (32, 16)]
+    elif piece_name[1] == "R":  # Rook
+        pixels = [(24, 48), (40, 48), (40, 32), (24, 32), (24, 28), (40, 28), (28, 16), (36, 16)]
+    elif piece_name[1] == "N":  # Knight
+        pixels = [(24, 48), (36, 48), (36, 32), (28, 32), (24, 24), (36, 16)]
+    elif piece_name[1] == "B":  # Bishop
+        pixels = [(28, 48), (36, 48), (36, 32), (28, 32), (32, 16), (24, 24), (40, 24)]
+    elif piece_name[1] == "Q":  # Queen
+        pixels = [(24, 48), (40, 48), (40, 28), (24, 28), (28, 16), (32, 12), (36, 16)]
+    elif piece_name[1] == "K":  # King
+        pixels = [(24, 48), (40, 48), (40, 32), (32, 28), (24, 32), (28, 12), (36, 12)]
 
-    # Draw a simple shape or text representing the piece
-    text = piece_name[1]  # R, N, B, Q, K, or P
-    draw.text((size // 3, size // 3), text, fill=color, font=font)
+    # Draw the pixelated shape
+    draw.polygon(pixels, fill=color)
 
     # Save the image
     image.save(f"images/{piece_name}.png")
 
 def main():
     pieces = ['bR', 'bN', 'bB', 'bQ', 'bK', 'bP', 'wR', 'wN', 'wB', 'wQ', 'wK', 'wP']
-    colors = {'b': "black", 'w': "white"}
+    colors = {'b': (0, 0, 0, 255), 'w': (255, 255, 255, 255)}
 
     for piece in pieces:
         color = colors[piece[0]]
-        create_chess_piece_image(piece, color)
+        create_pixel_chess_piece(piece, color)
 
 if __name__ == "__main__":
     import os
