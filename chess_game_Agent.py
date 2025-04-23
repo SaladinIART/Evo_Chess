@@ -59,7 +59,7 @@ pygame.display.set_caption("Chess Game")
 clock = pygame.time.Clock()
 
 # Fonts
-PIECE_FONT = pygame.font.SysFont('dejavusansmono', 60)
+PIECE_FONT = pygame.font.SysFont('segoeuisymbol', 60)
 MENU_TITLE_FONT = pygame.font.SysFont('arial', 48, bold=True)
 MENU_BUTTON_FONT = pygame.font.SysFont('arial', 32)
 HISTORY_FONT = pygame.font.SysFont('arial', 16)
